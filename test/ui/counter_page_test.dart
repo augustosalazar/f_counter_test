@@ -1,10 +1,3 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:f_counter_test/data/repositories/counter_repository.dart';
 import 'package:f_counter_test/domain/repositories/i_counter_repository.dart';
 import 'package:f_counter_test/domain/use_cases/counter_use_case.dart';
@@ -70,12 +63,12 @@ class MockCounterController extends GetxService
 }
 
 void main() {
-  testWidgets('Counter increments', (WidgetTester tester) async {
-    MockCounterController mockCounterController = MockCounterController();
-
+  setUp(() {
     Get.put<ICounterRepository>(FakeCounterRepository());
     Get.put(CounterUseCase(Get.find()));
-    Get.put<CounterController>(mockCounterController, permanent: true);
+  });
+  testWidgets('Counter increments', (WidgetTester tester) async {
+    Get.put<CounterController>(MockCounterController(), permanent: true);
 
     await tester.pumpWidget(const GetMaterialApp(home: CounterPage()));
 
@@ -87,64 +80,57 @@ void main() {
 
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
-
-    Get.deleteAll();
   });
 
   testWidgets('Counter increments with keys', (WidgetTester tester) async {
-    MockCounterController mockCounterController = MockCounterController();
-
-    Get.replace<CounterController>(mockCounterController);
+    Get.replace<CounterController>(MockCounterController());
 
     await tester.pumpWidget(const GetMaterialApp(home: CounterPage()));
 
-    final counterText =
-        find.byKey(const Key('counterText')).evaluate().single.widget as Text;
-    expect(counterText.data, '0');
+    expect(
+        (find.byKey(const Key('counterText')).evaluate().single.widget as Text)
+            .data,
+        '0');
 
     await tester.tap(find.byKey(const Key('counterIncrementButton')));
     await tester.pump();
 
-    final counterText2 =
-        find.byKey(const Key('counterText')).evaluate().single.widget as Text;
-    expect(counterText2.data, '1');
-
-    Get.deleteAll();
+    expect(
+        (find.byKey(const Key('counterText')).evaluate().single.widget as Text)
+            .data,
+        '1');
   });
 
   testWidgets('Counter set value', (WidgetTester tester) async {
-    MockCounterController mockCounterController = MockCounterController();
-
-    Get.replace<CounterController>(mockCounterController);
+    Get.replace<CounterController>(MockCounterController());
 
     await tester.pumpWidget(const GetMaterialApp(home: CounterPage()));
 
-    final counterText =
-        find.byKey(const Key('counterText')).evaluate().single.widget as Text;
-    expect(counterText.data, "0");
+    expect(
+        (find.byKey(const Key('counterText')).evaluate().single.widget as Text)
+            .data,
+        "0");
 
     await tester.enterText(find.byKey(const Key('counterTextField')), "5");
 
     await tester.tap(find.byKey(const Key('counterSetButton')));
     await tester.pump();
 
-    final counterText2 =
-        find.byKey(const Key('counterText')).evaluate().single.widget as Text;
-    expect(counterText2.data, "5");
-
-    Get.deleteAll();
+    expect(
+        (find.byKey(const Key('counterText')).evaluate().single.widget as Text)
+            .data,
+        "5");
   });
 
   testWidgets('Counter reset value', (WidgetTester tester) async {
-    MockCounterController mockCounterController = MockCounterController();
-
-    Get.replace<CounterController>(mockCounterController);
+    Get.replace<CounterController>(MockCounterController());
 
     await tester.pumpWidget(const GetMaterialApp(home: CounterPage()));
 
-    final counterText =
-        find.byKey(const Key('counterText')).evaluate().single.widget as Text;
-    expect(counterText.data, "0");
+    expect(
+        (find.byKey(const Key('counterText')).evaluate().single.widget as Text)
+            .data,
+        "0");
 
     await tester.enterText(find.byKey(const Key('counterTextField')), "5");
 
@@ -158,10 +144,9 @@ void main() {
     await tester.tap(find.byKey(const Key('counterResetButton')));
     await tester.pump();
 
-    final counterText3 =
-        find.byKey(const Key('counterText')).evaluate().single.widget as Text;
-    expect(counterText3.data, "0");
-
-    Get.deleteAll();
+    expect(
+        (find.byKey(const Key('counterText')).evaluate().single.widget as Text)
+            .data,
+        "0");
   });
 }
