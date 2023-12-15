@@ -1,25 +1,19 @@
 import 'package:get/get.dart';
 
-import '../../domain/use_cases/counter.dart';
+import '../../domain/use_cases/counter_use_case.dart';
 
 class CounterController extends GetxController {
   final _counter = 0.obs;
-  late Counter _counterUseCase;
-
-  @override
-  void onInit() {
-    super.onInit();
-    _counterUseCase = Counter();
-  }
+  final CounterUseCase _counterUseCase = Get.find();
 
   int get counter => _counter.value;
 
   void increment() {
-    _counter.value = _counterUseCase.increment(_counter.value);
+    _counter.value = _counterUseCase.increment();
   }
 
   void decrement() {
-    _counter.value = _counterUseCase.decrement(_counter.value);
+    _counter.value = _counterUseCase.decrement();
   }
 
   void reset() {
@@ -27,6 +21,6 @@ class CounterController extends GetxController {
   }
 
   void setValue(int value) {
-    _counter.value = value;
+    _counter.value = _counterUseCase.setCounter(value);
   }
 }

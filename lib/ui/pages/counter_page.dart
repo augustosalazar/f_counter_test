@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import '../controllers/counter_controller.dart';
+import '../widgets/set_value_widget.dart';
 
-class CounterPage extends StatefulWidget {
+class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
 
-  @override
-  State<CounterPage> createState() => _CounterPageState();
-}
-
-class _CounterPageState extends State<CounterPage> {
-  final TextEditingController _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     CounterController counterController = Get.find();
@@ -33,49 +26,7 @@ class _CounterPageState extends State<CounterPage> {
                   '${counterController.counter}',
                   style: Theme.of(context).textTheme.headlineMedium,
                 )),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: TextField(
-                          key: const Key('counterTextField'),
-                          controller: _textController,
-                          decoration: InputDecoration(
-                              filled: true,
-                              fillColor:
-                                  Theme.of(context).colorScheme.background,
-                              border: const OutlineInputBorder()),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                        ),
-                      ),
-                      const Spacer(),
-                      Expanded(
-                        flex: 2,
-                        child: ElevatedButton(
-                            key: const Key('counterSetButton'),
-                            onPressed: () => _textController.text.isNotEmpty
-                                ? counterController
-                                    .setValue(int.parse(_textController.text))
-                                : null,
-                            child: const Text('Set Value')),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            const SetValueWidget(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
