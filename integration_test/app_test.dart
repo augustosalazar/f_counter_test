@@ -11,10 +11,6 @@ import 'package:integration_test/integration_test.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() {
-    //Get.put(CounterController());
-  });
-
   testWidgets('Counter increments', (WidgetTester tester) async {
     Get.put<ICounterRepository>(CounterRepository());
     Get.put(CounterUseCase(Get.find()));
