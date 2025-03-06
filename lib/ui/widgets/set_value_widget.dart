@@ -33,7 +33,7 @@ class _SetValueWidgetState extends State<SetValueWidget> {
                   controller: _textController,
                   decoration: InputDecoration(
                       filled: true,
-                      fillColor: Theme.of(context).colorScheme.background,
+                      fillColor: Theme.of(context).colorScheme.primary,
                       border: const OutlineInputBorder()),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
